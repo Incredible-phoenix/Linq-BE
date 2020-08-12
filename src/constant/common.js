@@ -1,0 +1,2 @@
+
+exports.BYCRYPT_LENGTH = 12;

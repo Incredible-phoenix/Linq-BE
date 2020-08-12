@@ -1,0 +1,42 @@
+{
+  "name": "linq-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "apollo-datasource-rest": "^0.6.11",
+    "apollo-server": "^2.9.15",
+    "apollo-server-express": "^2.9.16",
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "graphql": "^14.5.8",
+    "mongoose": "^5.9.28"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/node": "^7.10.5",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.11.0",
+    "babel-plugin-root-import": "^6.5.0",
+    "babel-preset-es2015": "^6.24.1",
+    "nodemon": "^2.0.4"
+  },
+  "scripts": {
+    "start": "babel-node src/index.js",
+    "dev": "nodemon --exec babel-node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Incredible-phoenix/Linq-BE.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Incredible-phoenix/Linq-BE/issues"
+  },
+  "homepage": "https://github.com/Incredible-phoenix/Linq-BE#readme"
+}
