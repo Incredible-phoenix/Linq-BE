@@ -40,10 +40,25 @@ app.get('/drop', async (req, res) => {
   await seeds.dropData();
   res.status(200).json('Success');
 });
+const getUser = async req => {
+  const tokenWithBearer = req.headers.authorization || '';
+  const token = tokenWithBearer.split(' ')[1];
+
+  if (token) {
+    try {
+      return jwt.verify(token, process.env.JWT_SECRET);
+    } catch (error) {
+      assertSession();
+    }
+  }
+};
 
 const context = async ({ req }) => {
   if (req) {
+    const me = await getUser(req);
+
     return {
+      me,
       models
     };
   }

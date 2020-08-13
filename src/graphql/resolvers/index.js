@@ -1,8 +1,10 @@
 
 import user from './user';
+import auth from './auth';
 
 const resolvers = [
-  user
+  user,
+  auth
 ];
 
 export default resolvers;

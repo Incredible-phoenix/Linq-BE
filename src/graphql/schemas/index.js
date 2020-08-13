@@ -1,6 +1,7 @@
 
 import { gql } from 'apollo-server';
 import user from './user';
+import auth from './auth';
 
 const link = gql`
   scalar Date
@@ -14,7 +15,8 @@ const link = gql`
 
 const typeDefs = [
   link,
-  user
+  user,
+  auth,
 ];
 
 export default typeDefs;
