@@ -2,11 +2,13 @@ import express from 'express';
 import http from 'http';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import jwt from 'jsonwebtoken';
 import { ApolloServer } from 'apollo-server-express';
 import models from '../src/database/models';
 import typeDefs from '../src/graphql/schemas';
 import resolvers from '../src/graphql/resolvers';
 import dataSources from '../src/graphql/dataSources';
+import { assertSession } from '../src/graphql/permissions';
 import seeds from '../src/database/seeds';
 
 const GRAPHQL_SERVER_URL = '/graphql';
@@ -43,20 +45,20 @@ app.get('/drop', async (req, res) => {
 const getUser = async req => {
   const tokenWithBearer = req.headers.authorization || '';
   const token = tokenWithBearer.split(' ')[1];
-
   if (token) {
     try {
       return jwt.verify(token, process.env.JWT_SECRET);
     } catch (error) {
+      console.log("index- assert session")
       assertSession();
     }
   }
 };
 
 const context = async ({ req }) => {
+  
   if (req) {
     const me = await getUser(req);
-
     return {
       me,
       models

@@ -7,4 +7,5 @@ const dataSources = () => ({
   authAPI: new Auth(),
 });
 
+
 export default dataSources;
