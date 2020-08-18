@@ -52,22 +52,17 @@ class Auth extends DataSource {
   login = async ({ userName, password, remember }) => {
     userName = userName.trim();
     let user = await this.context.models.User.findOne({ userName: { $regex: new RegExp('^' + userName.toLowerCase() + '$', 'i') } });
-
-    if (!isEmpty(user)) {
-      assertValidAccount(user);
-      assertValidCredentials(password, user.password);
+    if (isEmpty(user)) {
+      throw new AuthenticationError(messageConstants.AUTH_USER_NOT_FOUND);
     }
 
+    assertValidAccount(user);
+    assertValidCredentials(password, user.password);
     try {
-      const role = await this.context.dataSources.roleAPI.getRoleById({ _id: user.roleId });
-      user.lastLoginAt = new Date();
-      await this.context.models.User.upsertWithCache(user._id, user);
-
       const token = jwt.sign(
         {
           id: user._id,
-          email: user.email,
-          role
+          email: user.email
         },
         process.env.JWT_SECRET,
         {

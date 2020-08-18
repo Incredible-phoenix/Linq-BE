@@ -18,6 +18,7 @@ const assertAuthenticated = context => {
 
 const assertValidCredentials = (password, hashPassword) => {
   const matchPasswords = bcrypt.compareSync(password, hashPassword);
+  console.log("matchPasswords", matchPasswords)
   if (!matchPasswords) {
     throw new AuthenticationError(messageConstants.AUTH_INVALID_CREDENTIAL);
   }

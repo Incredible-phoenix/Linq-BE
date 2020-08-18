@@ -1,13 +1,13 @@
 
 import { DataSource } from 'apollo-datasource';
+import { SyntaxError } from 'apollo-server';
 import { messages } from '../../constant/message';
+
 import {
   assertSession,
-  assertAuthenticated,
-  assertViewUsersValidation,
-  assertEditUserValidation
+  assertAuthenticated
 } from '../../graphql/permissions';
-
+import utils from '../../utils';
 
 class User extends DataSource {
   constructor() {
@@ -27,7 +27,6 @@ class User extends DataSource {
     }
   };
 
-
   getUserById = async ({ _id }) => {
     try {
       return await this.context.models.User.find({ _id });
@@ -37,17 +36,14 @@ class User extends DataSource {
     }
   };
 
-    getCurrentUser = async () => {
+  getCurrentUser = async () => {
     assertAuthenticated(this.context);
-
     try {
       const me = this.context.me;
-      const user = await this.context.models.User.findByIdWithCache(me.id);
-
+      const user = await this.context.models.User.find({ _id: me.id });
       if (utils.isEmpty(user)) {
         assertSession();
       }
-
       return user;
     } catch (error) {
       console.log('[ERROR]:getCurrentUser', error);
